@@ -1,0 +1,60 @@
+---
+title: 'Order Cancellation'
+openapi: 'POST /webhook/molin/v20240910/order-cancellation'
+---
+
+Molin will send Order Cancellation requests when a user requests to cancel an order. You should respond with the status of the cancellation.
+
+Example URL: https://store.com/webhook/molin/v20240910/order-cancellation
+
+## Request
+
+### Schema
+
+```js
+const OrderCancellationRequestSchema = v.object({
+  widgetId: v.string(),
+  conversationId: v.string(),
+  orderId: v.string(),
+  orderEmail: v.string(),
+});
+```
+
+### Example
+
+```json
+{
+  "widgetId": "v0iyxl53",
+  "conversationId": "2d326641-a872-4d7c-8306-9a42e6bd05ca",
+  "orderId": "ex123",
+  "orderEmail": "john@example.com"
+}
+```
+
+## Response
+
+You should always respond with a 200 status code.
+
+### Schema
+
+```js
+const OrderCancellationResponseSchema = v.object({
+  cancelled: v.boolean(),
+  reason: v.optional(v.string()),
+});
+```
+
+### Examples
+
+```json
+{
+  "cancelled": true
+}
+```
+
+```json
+{
+  "cancelled": false,
+  "reason": "order not found / order already shipped"
+}
+```

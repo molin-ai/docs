@@ -1,0 +1,98 @@
+---
+title: 'Product Sync API'
+description: 'Let Molin learn your products quickly'
+---
+
+This spec describes a JSON API served via HTTP, using header-based authentication and the schema.org format for product data.
+
+## Intro
+
+We borrowed the [JSON-LD spec](https://json-ld.org/) because shops already use it, for example visit any product page hosted by Shopify and you’ll find a `type="application/ld+json"` script tag encoding product information in a [schema.org](https://schema.org) format.
+
+## Endpoints
+
+We require the following endpoints if you are creating a custom API for us.
+
+### Retrieving all products
+
+We need an endpoint that we can call frequently to download your products.
+
+#### Spec
+
+- Content-Type must be **application/json**
+- The body must contain a list of products encoded as a JSON string
+- Each product object must be of type [Product (schema.org)](https://schema.org/Product)
+
+#### Example
+
+GET [https://petshop.com/molin/products.json](https://petshop.com/molin/products.json)
+
+```json
+[
+  {
+    "@context": "http://schema.org",
+    "@type": "Product",
+    "name": "Coffee Lenoa | Espresso",
+    "brand": "Coffee Lenoa",
+    "image": "//lenoacoffeeandshop.hu/cdn/shop/files/...",
+    "url": "https://lenoacoffeeandshop.hu/products/lenoa-espresso",
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "USD",
+      "lowPrice": "12.99",
+      "highPrice": "19.99",
+      "itemCondition": "http://schema.org/New",
+      "availability": "http://schema.org/InStock",
+      "offerCount": "2",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Coffee Lenoa | Espresso — 1000 gramm",
+          "availability": "http://schema.org/InStock",
+          "priceCurrency": "USD",
+          "price": "19.99"
+        },
+        {
+          "@type": "Offer",
+          "name": "Coffee Lenoa | Espresso — 250 gramm",
+          "availability": "http://schema.org/InStock",
+          "priceCurrency": "USD",
+          "price": "12.99"
+        }
+      ]
+    }
+  }
+]
+```
+
+The above response contains 1 product along with price and stock information.
+
+Note: You don’t have to use an AggregateOffer, you can just return 1 offer (1 price).
+
+#### Mandatory fields
+
+- **name**
+- **offers** (so we can extract a price — must include **price** and **priceCurrency**)
+- **url** (so we can uniquely identify the product)
+
+#### Optional but recommended fields
+
+- **Image**
+
+### Retrieving 1 product
+
+This is an optimization that we have not built yet.
+
+If you have lots of products, it is more efficient to also offer a single product endpoint. For example, if a customer asks Molin about the stock of 1 specific product, we will update only this specific product (quicker than downloading all of them).
+
+## Authentication
+
+You may add header-based authentication that relies on a simple shared secret (token).
+
+### Example
+
+If you give us the token `M123ABC`, we will include the following header in all requests:
+
+```
+Authorization: M123ABC
+```

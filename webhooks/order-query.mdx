@@ -1,0 +1,81 @@
+---
+title: 'Order Query'
+openapi: 'POST /webhook/molin/v20240910/order-query'
+---
+
+Molin will send Order Query requests when a user requests information about an order. You should respond with the order details.
+
+Example URL: https://store.com/webhook/molin/v20240910/order-query
+
+## Request
+
+### Schema
+
+```js
+const OrderQueryRequestSchema = v.object({
+  widgetId: v.string(),
+  conversationId: v.string(),
+  orderId: v.string(),
+  orderEmail: v.string(),
+});
+```
+
+### Example
+
+```json
+{
+  "widgetId": "v0iyxl53",
+  "conversationId": "2d326641-a872-4d7c-8306-9a42e6bd05ca",
+  "orderId": "ex123",
+  "orderEmail": "john@example.com"
+}
+```
+
+## Response
+
+If the order is not found, you should respond with a 404 status code.
+
+If found, you should respond with a 200 status code and the following body.
+
+### Schema
+
+```js
+const OrderQueryResponseSchema = v.object({
+  status: v.string(),
+  payment: v.object({
+    method: v.optional(v.string()),
+  }),
+  shipping: v.object({
+    method: v.optional(v.string()),
+    trackingURL: v.optional(v.string()),
+  }),
+  customer: v.object({
+    name: v.optional(v.string()),
+    email: v.optional(v.string()),
+  }),
+  extra: v.any(),
+});
+```
+
+### Example
+
+```json
+{
+  "status": "shipped",
+  "payment": {
+    "method": "credit card"
+  },
+  "shipping": {
+    "method": "courier - DHL Express",
+    "trackingURL": "https://dhl.com/track/123456"
+  },
+  "customer": {},
+  "extra": {
+    "expectedDeliveryDate": "2026-12-25"
+  }
+}
+```
+
+<Note>
+  In general, strings should be human readable, but short and succinct.
+</Note>

@@ -1,0 +1,175 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Molin AI",
+    "description": "",
+    "license": {
+      "name": "MIT"
+    },
+    "version": "0.1.2"
+  },
+  "servers": [
+    {
+      "url": "https://store.com"
+    }
+  ],
+  "security": [
+    {
+      "apiKey": []
+    }
+  ],
+  "paths": {
+    "/webhook/molin/v20240910/order-query": {
+      "post": {
+        "description": "Allows your customers to receive information about their order, such as the tracking link",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderQueryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Order details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderQueryResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Order not found"
+          }
+        }
+      }
+    },
+    "/webhook/molin/v20240910/order-cancellation": {
+      "post": {
+        "description": "Allows your customers to request cancellation of their order",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderCancellationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cancellation result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderCancellationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "OrderQueryRequest": {
+        "type": "object",
+        "required": ["widgetId", "conversationId", "orderId", "orderEmail"],
+        "properties": {
+          "widgetId": {
+            "type": "string"
+          },
+          "conversationId": {
+            "type": "string"
+          },
+          "orderId": {
+            "type": "string"
+          },
+          "orderEmail": {
+            "type": "string"
+          }
+        }
+      },
+      "OrderQueryResponse": {
+        "type": "object",
+        "required": ["status", "payment", "shipping", "customer"],
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "payment": {
+            "type": "object",
+            "properties": {
+              "method": {
+                "type": "string"
+              }
+            }
+          },
+          "shipping": {
+            "type": "object",
+            "properties": {
+              "method": {
+                "type": "string"
+              },
+              "trackingURL": {
+                "type": "string"
+              }
+            }
+          },
+          "customer": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              }
+            }
+          },
+          "extra": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "OrderCancellationRequest": {
+        "type": "object",
+        "required": ["widgetId", "conversationId", "orderId", "orderEmail"],
+        "properties": {
+          "widgetId": {
+            "type": "string"
+          },
+          "conversationId": {
+            "type": "string"
+          },
+          "orderId": {
+            "type": "string"
+          },
+          "orderEmail": {
+            "type": "string"
+          }
+        }
+      },
+      "OrderCancellationResponse": {
+        "type": "object",
+        "required": ["cancelled"],
+        "properties": {
+          "cancelled": {
+            "type": "boolean"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

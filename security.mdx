@@ -1,0 +1,16 @@
+---
+title: 'Security'
+description: 'Security measures to keep your data safe'
+---
+
+## Sensitive information in responses
+
+Do not include sensitive information in any response. You should assume that the response will be visible to the user in its entirety. If you need to include sensitive information, you should provide a link to a secure page where the user can view the information.
+
+## HMAC signature verification
+
+We are working on implementing HMAC signatures on all requests so you can verify that the request is coming from Molin. This feature is not yet available, but we will update this document when it is.
+
+## Encryption
+
+You must use `https` to ensure that the data is encrypted in transit. Our API does not support `http` connections.
