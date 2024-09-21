@@ -1,0 +1,46 @@
+---
+title: 'Inject User Data'
+description: 'Learn how to pass data to the widget'
+---
+
+<Note>
+  PREVIEW ONLY. WORK IN PROGRESS.
+</Note>
+
+## Intro
+
+You can pass custom data into the widget so that when it loads on the page, the AI will know more details about your visitor.
+
+Examples of information you can include:
+- your customer's email, name, ID
+- their most recent order information
+
+This information can be made available inside the dashboard, on the Inbox page, for your agents.
+
+Additionally, it can be given as instructions to the AI. Molin will remember your information in the conversation with the customer.
+
+## Injecting directly into the component
+
+If you manually render the custom components `<molin-shop-ai>` or `<molin-shop-ai-chat>`, you can pass in the data as an attribute:
+
+```html
+<molin-shop-ai-chat x-user-data="{...}"></molin-shop-ai-chat>
+```
+
+## Automatic injection
+
+Simply include your data in a `<script>`:
+
+```html
+<script>
+  window.molinSettings = {
+    ...
+  };
+</script>
+```
+
+## User data format
+
+<Note>
+  TO BE CONFIRMED
+</Note>

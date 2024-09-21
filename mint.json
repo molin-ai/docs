@@ -34,11 +34,19 @@
     },
     {
       "group": "APIs (beta)",
-      "pages": ["webhooks", "product-sync", "custom-actions"]
+      "pages": ["webhooks", "product-sync"]
     },
     {
       "group": "Webhooks API (beta)",
       "pages": ["webhooks/order-cancellation", "webhooks/order-query"]
+    },
+    {
+      "group": "Platforms",
+      "pages": ["platforms/google-merchant-feed"]
+    },
+    {
+      "group": "APIs (experimental)",
+      "pages": ["custom-actions", "inject-user-data"]
     }
   ],
   "footerSocials": {
