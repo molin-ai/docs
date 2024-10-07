@@ -5,11 +5,11 @@ description: 'Learn how to use schemas for type-safety and payload validation'
 
 ## Intro
 
-We use [valibot](https://valibot.dev/) schemas to validate the request and response payloads. We also publish these schemas via npm at [@molin.ai/api](https://www.npmjs.com/package/@molin.ai/api) so you can use them to validate the response payloads in your code. Using the [@molin.ai/api](https://www.npmjs.com/package/@molin.ai/api) package is optional as long as your implementation is compliant and follows the schemas documented below.
+We use [valibot](https://valibot.dev/) schemas to validate the request and response payloads. We also publish these schemas via npm at [@molin.ai/api](https://www.npmjs.com/package/@molin.ai/api) so you can use them to validate the response payloads in your code. Using the [@molin.ai/api](https://www.npmjs.com/package/@molin.ai/api) package is optional as long as your implementation is compliant and follows the schemas of each API.
 
 ## Required fields
 
-Unless a field is marked as optional using `v.optional()`, it is required and cannot be `null/undefined`. Generally, all top-level fields are required, nested fields may be optional, and you may provide additional data in the `extra` field.
+Unless a field is marked as optional using `v.optional()`, it is required and cannot be `null` or `undefined`. Generally, all top-level fields are required, nested fields may be optional, and you may provide additional data in the `extra` field.
 
 ## Example
 

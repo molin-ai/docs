@@ -3,15 +3,15 @@ title: 'Product Sync API'
 description: 'Let Molin learn your products quickly'
 ---
 
-This spec describes a JSON API served via HTTP, using header-based authentication and the schema.org format for product data.
+This spec describes a JSON API served via HTTP, using header-based authentication and the [schema.org](https://schema.org/) format for product data.
 
 ## Intro
 
-We borrowed the [JSON-LD spec](https://json-ld.org/) because shops already use it, for example visit any product page hosted by Shopify and you’ll find a `type="application/ld+json"` script tag encoding product information in a [schema.org](https://schema.org) format.
+We borrowed the [JSON-LD spec](https://json-ld.org/) because shops already use it. If you visit any product page hosted by Shopify you’ll find a `type="application/ld+json"` script tag encoding product information in a [schema.org](https://schema.org) format.
 
 ## Endpoints
 
-We require the following endpoints if you are creating a custom API for us.
+We require the following endpoints if you are creating a custom API for Molin.
 
 ### Retrieving all products
 
@@ -21,7 +21,7 @@ We need an endpoint that we can call frequently to download your products.
 
 - Content-Type must be **application/json**
 - The body must contain a list of products encoded as a JSON string
-- Each product object must be of type [Product (schema.org)](https://schema.org/Product)
+- Each product object must be of type [schema.org/Product](https://schema.org/Product)
 
 #### Example
 
@@ -67,7 +67,9 @@ GET [https://petshop.com/molin/products.json](https://petshop.com/molin/products
 
 The above response contains 1 product along with price and stock information.
 
-Note: You don’t have to use an AggregateOffer, you can just return 1 offer (1 price).
+<Note>
+  You don’t have to use an [schema.org/AggregateOffer](https://schema.org/AggregateOffer), you can just return a single [schema.org/Offer](https://schema.org/Offer).
+</Note>
 
 #### Mandatory fields
 

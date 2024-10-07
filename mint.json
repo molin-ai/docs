@@ -42,7 +42,14 @@
     },
     {
       "group": "Platforms",
-      "pages": ["platforms/google-merchant-feed"]
+      "pages": [
+        "platforms/shopify",
+        "platforms/shoprenter",
+        "platforms/unas",
+        "platforms/woocommerce",
+        "platforms/google-merchant-feed",
+        "platforms/ai-sitemap-scraper"
+      ]
     },
     {
       "group": "APIs (experimental)",
