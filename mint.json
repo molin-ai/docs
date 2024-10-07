@@ -30,11 +30,15 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "security", "schemas"]
+      "pages": [
+        "get-started/introduction",
+        "get-started/security",
+        "get-started/validation"
+      ]
     },
     {
       "group": "APIs (beta)",
-      "pages": ["webhooks", "product-sync"]
+      "pages": ["apis/beta/webhooks", "apis/beta/product-sync"]
     },
     {
       "group": "Webhooks API (beta)",
@@ -53,7 +57,10 @@
     },
     {
       "group": "APIs (experimental)",
-      "pages": ["custom-actions", "inject-user-data"]
+      "pages": [
+        "apis/experimental/custom-actions",
+        "apis/experimental/inject-user-data"
+      ]
     }
   ],
   "footerSocials": {
