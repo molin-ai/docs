@@ -6,10 +6,37 @@ description: 'Learn how to pass data to the widget'
 ## Intro
 
 You can pass 2 types of data to Molin:
-1. User data (e.g. your customer's email, name, ID, their most recent order, etc) which will be made available in the dashboard (on the Inbox page) for your agents to see.
-2. Custom instructions for the AI to follow (these will be used in addition to the instructions configured via our dashboard).
+1. User data (e.g. your customer's email, name, ID, their most recent order, etc) which will be made available in the dashboard (on the Inbox page) for your agents to see
+2. Custom instructions for the AI to follow (these will be used in addition to the instructions configured via our dashboard)
 
 ## How to pass data
+
+You will pass data through the Molin AI widget. The widget is either installed automatically (if your platform uses our plugin, e.g. Shopify, UNAS, Shoprenter) or it is embedded manually (if you use a custom platform). It looks like this:
+
+```html
+<script type="module" src="https://widget.molin.ai/shop-ai.js?w=123"></script>
+```
+
+### Automatic injection
+
+Simply include your data in a `<script>` tag, placed anywhere inside the `<head></head>` section of your website:
+
+```html
+<script>
+  window.molinSettings = {
+    userData: {
+      user_id: 'u123',
+      name: 'John Doe',
+      email: 'john@doe.com',
+      created_at: '2021-01-01T00:00:00Z',
+      last_order_id: 'o123',
+    },
+    promptExt: 'Do not use emojis.',
+  };
+</script>
+```
+
+When the widget is loaded, it will automatically read the data from `window.molinSettings`.
 
 ### Inject directly into the component
 
@@ -33,27 +60,6 @@ el.setAttribute('x-prompt-ext', 'Do not use emojis.');
 <Note>
   Both attributes `x-user-data` and `x-prompt-ext` are of type `string`. Please see below the data format section.
 </Note>
-
-### Automatic injection
-
-Simply include your data in a `<script>` inside the `<head></head>` section of your website:
-
-```html
-<script>
-  window.molinSettings = {
-    userData: {
-      user_id: 'u123',
-      name: 'John Doe',
-      email: 'john@doe.com',
-      created_at: '2021-01-01T00:00:00Z',
-      last_order_id: 'o123',
-    },
-    promptExt: 'Do not use emojis.',
-  };
-</script>
-```
-
-When the widget is loaded, it will automatically pick up the data from `window.molinSettings`.
 
 ## Data formats
 
@@ -83,3 +89,26 @@ const xUserDataSchema = v.record(
 You must pass custom instructions as a string, in plain text or markdown.
 
 The minimum length is 1 character and the maximum is 1000 characters.
+
+## Data persistence
+
+Molin's client side widget remembers the most recently active conversation. If you inject user data, it will be remembered for the duration of the conversation. Therefore, it is important to reset the widget when the user logs out:
+
+```javascript
+if (window.Molin) {
+  window.Molin.reset();
+}
+```
+
+## Security
+
+### Data handling
+
+You must understand how each piece of data is handled by Molin:
+
+1. User data (`x-user-data`) is stored in our database and is visible to your agents in the dashboard. It is encrypted at rest and in transit. It is not shown to the LLM we use to generate AI responses. Check the members of your team to ensure they have the necessary permissions to view this data.
+2. Custom instructions (`x-prompt-ext`) are shown to the LLM we use to generate AI responses. Assume that they are visible to the user in their entirety, even if the AI is usually smart enough to only disclose the specific information the user is asking for.
+
+### Protection against session reuse
+
+You must ensure that you reset the widget when the user logs out. This is to prevent the next user from seeing the previous user's data when continuing the conversation. See [Data persistence](#data-persistence).
