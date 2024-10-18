@@ -31,7 +31,7 @@ Simply include your data in a `<script>` tag, placed anywhere inside the `<head>
       created_at: '2021-01-01T00:00:00Z',
       last_order_id: 'o123',
     },
-    promptExt: 'Do not use emojis.',
+    promptExt: "The customer's last order was OR83592.",
   };
 </script>
 ```
@@ -45,7 +45,7 @@ If you manually render the custom components `<molin-shop-ai>` or `<molin-shop-a
 ```html
 <molin-shop-ai-chat
   x-user-data="{&quot;name&quot;:&quot;John Doe&quot;}"
-  x-prompt-ext="Do not use emojis.">
+  x-prompt-ext="The customer's last order was OR83592.">
 </molin-shop-ai-chat>
 ```
 
@@ -54,7 +54,7 @@ Alternatively, you can assign data programmatically:
 ```javascript
 const el = document.querySelector('molin-shop-ai-chat');
 el.setAttribute('x-user-data', JSON.stringify({ name: 'John Doe' }));
-el.setAttribute('x-prompt-ext', 'Do not use emojis.');
+el.setAttribute('x-prompt-ext', "The customer's last order was OR83592.");
 ```
 
 <Note>
